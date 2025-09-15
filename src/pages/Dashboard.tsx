@@ -16,68 +16,18 @@ import {
   Calendar,
   Download
 } from "lucide-react";
-
-// Mock data - in real app this would come from backend
-const userRole = 'student'; // This would be dynamic based on logged-in user
-const userName = 'Lingkan';
-
-const mockCourses = [
-  {
-    id: '1',
-    title: 'Figma workshop',
-    instructor: {
-      name: 'Eli Sanchez',
-      country: 'USA',
-      avatar: ''
-    },
-    level: 'Advanced' as const,
-    progress: 50,
-    duration: '2h 30m',
-    students: 1250,
-    rating: 4.8,
-    isEnrolled: true
-  },
-  {
-    id: '2',
-    title: 'Fun with PHP',
-    instructor: {
-      name: 'Jesse Gregory',
-      country: 'Belgium',
-      avatar: ''
-    },
-    level: 'Beginner' as const,
-    progress: 25,
-    duration: '1h 45m',
-    students: 890,
-    rating: 4.6,
-    isEnrolled: true
-  },
-  {
-    id: '3',
-    title: 'Python Guide',
-    instructor: {
-      name: 'Gonzalo Hanna',
-      country: 'Italy',
-      avatar: ''
-    },
-    level: 'Intermediate' as const,
-    progress: 30,
-    duration: '3h 15m',
-    students: 2100,
-    rating: 4.9,
-    isEnrolled: true
-  }
-];
+import { courses, currentUser } from "@/data/mockData";
 
 export default function Dashboard() {
   const showingDate = "23 Sep, 2025 - 28 Sep, 2025";
+  const userCourses = courses.filter(course => currentUser.enrolledCourses?.includes(course.id));
 
   return (
     <div className="min-h-screen bg-background">
-      <Header userRole={userRole} userName={userName} />
+      <Header />
       
       <div className="flex">
-        <Sidebar userRole={userRole} />
+        <Sidebar />
         
         <main className="flex-1 p-6 space-y-6">
           {/* Header */}
@@ -85,7 +35,7 @@ export default function Dashboard() {
             <div>
               <h1 className="text-2xl font-bold font-display">Dashboard</h1>
               <p className="text-muted-foreground">
-                Hello {userName}, welcome back to your learning platform!
+                Hello {currentUser.name}, welcome back to your learning platform!
               </p>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -162,8 +112,8 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockCourses.map((course) => (
-                <CourseCard key={course.id} {...course} />
+              {userCourses.map((course) => (
+                <CourseCard key={course.id} course={course} />
               ))}
             </div>
           </div>
