@@ -66,6 +66,10 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
+        progress: {
+          bg: "hsl(var(--progress-bg))",
+          fill: "hsl(var(--progress-fill))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
