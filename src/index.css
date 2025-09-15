@@ -1,42 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Skillora E-Learning Platform Design System 
+Based on uploaded design tokens - Helvetica typography and orange/black color scheme
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
+    /* Core brand colors from design system */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 5.1%; /* #0D0D0D converted to HSL */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 5.1%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 5.1%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary orange from design system #E95918 */
+    --primary: 18 75% 51%; 
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 18 75% 45%;
+    --primary-glow: 18 75% 51% / 0.3;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary grays from design system */
+    --secondary: 213 15% 84%; /* #D4D8DD converted */
+    --secondary-foreground: 0 0% 5.1%;
+    --secondary-dark: 0 0% 5.1%; /* #0D0D0D for dark sections */
+    --secondary-dark-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 213 15% 94%;
+    --muted-foreground: 213 15% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 18 75% 51%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 213 15% 90%;
+    --input: 213 15% 94%;
+    --ring: 18 75% 51%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Learning platform specific colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 93% 58%;
+    --warning-foreground: 0 0% 5.1%;
+    --info: 200 98% 39%;
+    --info-foreground: 0 0% 100%;
+
+    /* Progress and analytics colors */
+    --progress-bg: 213 15% 94%;
+    --progress-fill: 18 75% 51%;
+    --chart-primary: 18 75% 51%;
+    --chart-secondary: 0 0% 5.1%;
+    --chart-tertiary: 213 15% 84%;
+
+    /* Gradients for beautiful effects */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-hover)));
+    --gradient-dark: linear-gradient(135deg, hsl(var(--secondary-dark)), hsl(0 0% 10%));
+    --gradient-card: linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted)));
+
+    /* Shadows with brand colors */
+    --shadow-sm: 0 1px 2px 0 hsl(var(--primary-glow));
+    --shadow-md: 0 4px 6px -1px hsl(var(--primary-glow));
+    --shadow-lg: 0 10px 15px -3px hsl(var(--primary-glow));
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow));
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +96,39 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 5.1%;
+    --foreground: 0 0% 100%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 18 75% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 18 75% 45%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-dark: 0 0% 5.1%;
+    --secondary-dark-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 18 75% 51%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 18 75% 51%;
+
+    --progress-bg: 0 0% 15%;
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(0 0% 10%));
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +146,42 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  .font-display {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .skillora-card {
+    @apply bg-card border border-border rounded-xl shadow-sm transition-all duration-300 hover:shadow-md;
+  }
+
+  .skillora-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-medium rounded-lg px-4 py-2 transition-all duration-200;
+  }
+
+  .skillora-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .skillora-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .skillora-progress {
+    @apply bg-progress-bg rounded-full h-2 overflow-hidden;
+  }
+
+  .skillora-progress-fill {
+    @apply bg-primary h-full rounded-full transition-all duration-500 ease-out;
   }
 }
