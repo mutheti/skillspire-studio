@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BookOpen, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +13,43 @@ import { Separator } from "@/components/ui/separator";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [userRole, setUserRole] = useState<'student' | 'tutor' | 'admin'>('student');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const success = login(email, password, userRole);
+      if (success) {
+        toast({
+          title: "Login successful!",
+          description: `Welcome back! Redirecting to your ${userRole} dashboard.`,
+        });
+        navigate('/');
+      } else {
+        toast({
+          title: "Login failed",
+          description: "Invalid credentials. Please check your email, password, and role selection.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 p-4">
@@ -31,7 +70,7 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               {/* Role Selection */}
               <div className="space-y-2">
                 <Label htmlFor="role">Login as</Label>
@@ -55,6 +94,9 @@ export default function Login() {
                   type="email"
                   placeholder="Enter your email"
                   className="h-11"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
 
@@ -67,6 +109,9 @@ export default function Login() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     className="h-11 pr-10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <Button
                     type="button"
@@ -105,8 +150,8 @@ export default function Login() {
               </div>
 
               {/* Sign in button */}
-              <Button type="submit" className="w-full h-11 skillora-button-primary">
-                Sign In
+              <Button type="submit" className="w-full h-11 skillora-button-primary" disabled={isLoading}>
+                {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
 
